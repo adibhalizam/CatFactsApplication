@@ -46,10 +46,11 @@ class SecondFragment : Fragment() {
             //Picasso.get().load(breed.url).into(binding.catImage)
             if (breed.imageUrl.isNotEmpty()) {
                 // Load the image using Picasso with the breed's image URL
-                Picasso.get().load(breed.imageUrl)
-                    .placeholder(android.R.drawable.ic_menu_gallery) // Built-in placeholder image
-                    .error(android.R.drawable.ic_delete) // Built-in error image if the URL is invalid
-                    .into(binding.catImage)
+                Picasso.get().load(breed.imageUrl).into(binding.catImage)
+//                Picasso.get().load(breed.imageUrl)
+//                    .placeholder(android.R.drawable.ic_menu_gallery) // Built-in placeholder image
+//                    .error(android.R.drawable.ic_delete) // Built-in error image if the URL is invalid
+//                    .into(binding.catImage)
             } else {
                 // If the URL is empty, show a placeholder image
                 Picasso.get().load(android.R.drawable.ic_menu_gallery).into(binding.catImage)
