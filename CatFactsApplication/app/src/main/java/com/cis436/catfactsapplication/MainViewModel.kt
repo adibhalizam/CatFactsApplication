@@ -6,23 +6,24 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.android.volley.Request
-import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import org.json.JSONArray
-import org.json.JSONObject
+import org.json.JSONException
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     data class CatBreed(
         val name: String,
         val temperament: String,
-        val origin: String
+        val origin: String,
+        val url: String
     )
 
     // LiveData to hold the list of cat breeds
     private val _catBreeds = MutableLiveData<List<CatBreed>>()
-    val catBreeds: LiveData<List<CatBreed>> = _catBreeds
+    public var selectedBreed = MutableLiveData<CatBreed>()
+    public var name = ""
 
     init {
         fetchCatData()
@@ -62,11 +63,26 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 val name = jsonObject.getString("name")
                 val temperament = jsonObject.optString("temperament", "")
                 val origin = jsonObject.optString("origin", "")
-                catBreedsList.add(CatBreed(name, temperament, origin))
+                val url = jsonObject.getJSONObject("image").getString("url")
+                catBreedsList.add(CatBreed(name, temperament, origin, url))
             }
         } catch (e: Exception) {
             Log.e("MainViewModel", "Error parsing JSON response: ${e.message}")
         }
         return catBreedsList
     }
+
+    public fun getCatBreeds(): LiveData<List<CatBreed>> {
+        return _catBreeds
+    }
+
+    public fun setBreed(breed: CatBreed){
+        selectedBreed.value = breed
+    }
+
+    public fun getBreed(): LiveData<CatBreed> {
+        return selectedBreed
+    }
+
+
 }

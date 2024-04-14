@@ -11,7 +11,7 @@ import android.view.Menu
 import android.view.MenuItem
 import com.cis436.catfactsapplication.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity(), FirstFragment.SpinnerListener {
+class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
@@ -38,10 +38,6 @@ class MainActivity : AppCompatActivity(), FirstFragment.SpinnerListener {
             R.id.action_settings -> true
             else -> super.onOptionsItemSelected(item)
         }
-    }
-
-    override fun getCatPosition(value: Int) {
-
     }
 
 }
