@@ -17,7 +17,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         val name: String,
         val temperament: String,
         val origin: String,
-        val url: String
+        val imageUrl: String
     )
 
     // LiveData to hold the list of cat breeds
@@ -63,8 +63,11 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 val name = jsonObject.getString("name")
                 val temperament = jsonObject.optString("temperament", "")
                 val origin = jsonObject.optString("origin", "")
-                val url = jsonObject.getJSONObject("image").getString("url")
-                catBreedsList.add(CatBreed(name, temperament, origin, url))
+                //val url = jsonObject.getJSONObject("image").getString("url")
+                val imageObject = jsonObject.optJSONObject("image")
+                val imageUrl = imageObject?.getString("url") ?: ""
+                Log.d("MainViewModel", "URL: $imageUrl")
+                catBreedsList.add(CatBreed(name, temperament, origin, imageUrl))
             }
         } catch (e: Exception) {
             Log.e("MainViewModel", "Error parsing JSON response: ${e.message}")

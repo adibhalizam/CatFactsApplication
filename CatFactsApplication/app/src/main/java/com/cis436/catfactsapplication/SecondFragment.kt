@@ -43,7 +43,17 @@ class SecondFragment : Fragment() {
 
         viewModel.getBreed().observe(viewLifecycleOwner, Observer {breed->
 
-            Picasso.get().load(breed.url).into(binding.catImage)
+            //Picasso.get().load(breed.url).into(binding.catImage)
+            if (breed.imageUrl.isNotEmpty()) {
+                // Load the image using Picasso with the breed's image URL
+                Picasso.get().load(breed.imageUrl)
+                    .placeholder(android.R.drawable.ic_menu_gallery) // Built-in placeholder image
+                    .error(android.R.drawable.ic_delete) // Built-in error image if the URL is invalid
+                    .into(binding.catImage)
+            } else {
+                // If the URL is empty, show a placeholder image
+                Picasso.get().load(android.R.drawable.ic_menu_gallery).into(binding.catImage)
+            }
             binding.name.text = breed.name
             binding.temperament.text = breed.temperament
             binding.origin.text = breed.origin
