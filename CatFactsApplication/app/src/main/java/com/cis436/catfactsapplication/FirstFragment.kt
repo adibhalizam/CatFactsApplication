@@ -13,6 +13,7 @@ import com.cis436.catfactsapplication.databinding.FragmentFirstBinding
  */
 class FirstFragment : Fragment() {
 
+    private lateinit var viewModel : MainViewModel
     private var _binding: FragmentFirstBinding? = null
 
     // This property is only valid between onCreateView and
