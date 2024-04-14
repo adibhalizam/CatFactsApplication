@@ -23,12 +23,17 @@ class FirstFragment : Fragment() {
 
     private lateinit var viewModel : MainViewModel
     private var _binding: FragmentFirstBinding? = null
+    private lateinit var activityCallback : SpinnerListener
+
 
 
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
 
+    interface SpinnerListener{
+        fun getCatPosition(value: Int)
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -51,9 +56,9 @@ class FirstFragment : Fragment() {
         })
 
         binding.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View, position: Int, id: Long) {
                 // Handle item selection here
-                val selectedCatName = parent?.getItemAtPosition(position).toString()
+                    getCatPosition(view, position)
                 // You can pass the selectedCatName to the SecondFragment if needed
             }
 
@@ -63,6 +68,9 @@ class FirstFragment : Fragment() {
         }
     }
 
+    fun getCatPosition(view: View, value: Int){
+        activityCallback.getCatPosition(value)
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()
